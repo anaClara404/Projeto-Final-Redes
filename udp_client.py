@@ -1,8 +1,11 @@
 import socket
 import struct
 
+# porta e ip do servidor
+server_address = ('15.228.191.109', 50000)
+
 # construir a mensagem
-def build_payload(req_res, tipo, identificador, tamanho=0):
+def build_message(req_res, tipo, identificador, tamanho=0):
     # 4 bits req/res, 4 bits tipo, 16 bits identificador
     # montando os 4 bits req/res e 4 bits tipo em um byte
     req_res_tipo = (req_res << 4) | tipo
@@ -24,11 +27,11 @@ def interpret_response(response):
     req_res = (req_res_tipo >> 4) & 0x0F  # extraindo os 4 bits de req/res
     tipo = req_res_tipo & 0x0F            # extraindo os 4 bits de tipo
 
-    print(f"Resposta do Servidor:")
-    print(f"Req/Res: {req_res}")
-    print(f"Tipo: {tipo}")
-    print(f"Identificador: {identificador}")
-    print(f"Tamanho da resposta: {tamanho}")
+    # print(f"Resposta do Servidor:")
+    # print(f"Req/Res: {req_res}")
+    # print(f"Tipo: {tipo}")
+    # print(f"Identificador: {identificador}")
+    # print(f"Tamanho da resposta: {tamanho}")
 
 # menu para o cliente
 while True:
@@ -44,18 +47,24 @@ while True:
         message = build_message(req_res=0, tipo=0, identificador=1234)
         response = send_request(server_address, message)
         interpret_response(response)
+        date_time = response[4:].decode('utf-8').strip()
+        print(date_time)
         
     elif choice == 2:
         # requisição de frase motivacional (req/res = 0000, Tipo = 0001)
         message = build_message(req_res=0, tipo=1, identificador=1235)
         response = send_request(server_address, message)
         interpret_response(response)
+        motivational_message = response[4:].decode('utf-8').strip()
+        print(motivational_message)
         
     elif choice == 3:
         # requisição de quantidade de respostas (req/res = 0000, Tipo = 0010)
         message = build_message(req_res=0, tipo=2, identificador=1236)
         response = send_request(server_address, message)
         interpret_response(response)
+        request_number = response[4:].decode('utf-8').strip()
+        print(request_number)
         
     elif choice == 4:
         print("Encerrando o cliente...")
@@ -64,7 +73,4 @@ while True:
     else:
         print("Opção inválida. Tente novamente.")
 
-# endereço do servidor e porta
-server_ip = "15.228.191.109"
-server_port = 50000
-server_address = (server_ip, server_port)
+
