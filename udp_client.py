@@ -29,8 +29,6 @@ def interpret_response(response):
     print(f"Tipo: {tipo}")
     print(f"Identificador: {identificador}")
     print(f"Tamanho da resposta: {tamanho}")
-    print(f"Byte 1: {byte1}")
-    print(f"Byte 2: {byte2}")
 
 # menu para o cliente
 while True:
