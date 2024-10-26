@@ -15,17 +15,17 @@ def send_request(server_ip, server_port, tipo_requisicao):
     # gera um id com base no timestamp
     identificador = int(time.time()) & 0xFFF # mantém o id de 2 bytes
 
-    # Constrói a mensagem conforme o formato especificado
+    # constrói a mensagem conforme o formato especificado
     mensagem = built_message(tipo_requisicao, identificador)
 
-    # Cria o pacote IP e UDP e adiciona a carga útil (mensagem)
+    # cria o pacote IP e UDP e adiciona a carga útil (mensagem)
     pacote = IP(dst=server_ip) / UDP(dport=server_port) / Raw(load=mensagem)
 
-    # Envia o pacote e aguarda a resposta
+    # envia o pacote e aguarda a resposta
     resposta = sr1(pacote, timeout=2)
 
     if resposta and Raw in resposta:
-        # Extrai e retorna a carga útil da resposta
+        # extrai e retorna a carga útil da resposta
         return resposta[Raw].load
     else:
         return None
