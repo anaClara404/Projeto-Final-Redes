@@ -59,12 +59,14 @@ while True:
         print(motivational_message)
         
     elif choice == 3:
-        # requisição de quantidade de respostas (req/res = 0000, Tipo = 0010)
+        # requisição de quantidade de respostas (req/res = 0000, tipo = 0010)
         message = build_message(req_res=0, tipo=2, identificador=1236)
         response = send_request(server_address, message)
         interpret_response(response)
-        request_number = response[4:].decode('utf-8').strip()
-        print(request_number)
+        
+        request_number_bytes = response[4:]
+        request_number = int.from_bytes(request_number_bytes[:4], byteorder='big')
+        print(f"Quantidade de requisições ao servidor: {request_number}") 
         
     elif choice == 4:
         print("Encerrando o cliente...")
@@ -72,5 +74,3 @@ while True:
     
     else:
         print("Opção inválida. Tente novamente.")
-
-
