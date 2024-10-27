@@ -15,7 +15,6 @@ def cliente_scapy():
     src_port = 49455
     dst_port = 50000
 
-<<<<<<< HEAD
     while True:
         print("\n1. Solicitar data e hora")
         print("2. Solicitar mensagem motivacional")
@@ -78,20 +77,3 @@ def cliente_scapy():
 
 # Executa o cliente
 cliente_scapy()
-=======
-    # constrói a mensagem conforme o formato especificado
-    mensagem = built_message(tipo_requisicao, identificador)
-
-    # cria o pacote IP e UDP e adiciona a carga útil (mensagem)
-    pacote = IP(dst=server_ip) / UDP(dport=server_port) / Raw(load=mensagem)
-
-    # envia o pacote e aguarda a resposta
-    resposta = sr1(pacote, timeout=2)
-
-    if resposta and Raw in resposta:
-        # extrai e retorna a carga útil da resposta
-        return resposta[Raw].load
-    else:
-        return None
->>>>>>> 4b7c7a725cb106f9e22d1f54747aa4fa887bcd81
-
