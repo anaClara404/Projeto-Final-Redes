@@ -1,3 +1,5 @@
+# Ana Clara Ferreira Epaminondas, Danylo Rodrigues Nunes, Giovanni Mendes Costa
+
 import socket
 import struct
 
@@ -27,12 +29,6 @@ def interpret_response(response):
     req_res_tipo, identificador, tamanho = struct.unpack('!BHB', response[:4])
     req_res = (req_res_tipo >> 4) & 0x0F  # extraindo os 4 bits de req/res
     tipo = req_res_tipo & 0x0F            # extraindo os 4 bits de tipo
-
-    # print(f"Resposta do Servidor:")
-    # print(f"Req/Res: {req_res}")
-    # print(f"Tipo: {tipo}")
-    # print(f"Identificador: {identificador}")
-    # print(f"Tamanho da resposta: {tamanho}")
 
 # menu para o cliente
 while True:
